@@ -39,3 +39,25 @@ img {
   display: block;
   margin: 0 auto;
 }
+
+button {
+  border-radius: 7px;
+  border-color: transparent;
+  background-color: rgba(182, 147, 32, 0.459);
+  min-width: 80px;
+  min-height: 35px;
+  max-width: 85px;
+  max-height: 45px;
+  margin-top: 5px;
+}
+
+button:hover {
+  transform: translateY(3px);
+}
+
+a {
+  text-decoration: none;
+  box-shadow: none;
+  color:black;
+}
+
