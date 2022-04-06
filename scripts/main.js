@@ -17,7 +17,7 @@ function estableceNombreUsuario() {
       estableceNombreUsuario();
     } else {
       localStorage.setItem('nombre', miNombre);
-      miTitulo.innerHTML = 'Mozilla is genial, ' + miNombre;
+      miTitulo.innerHTML = 'Bienvenido a LxB test, ' + miNombre;
     }
   }
 if (!localStorage.getItem('nombre')) {
