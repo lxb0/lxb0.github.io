@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #3498dbcb, #ff00ff38);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 500px;
+      padding: 20px;
+      background-color: rgba(15, 13, 13, 0.479);
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: rgb(255, 255, 255);
+    }
+
+    .info-select {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    #infoContainer {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #infoContainer p {
+      margin: 0;
+      font-size: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Información del dispositivo</h1>
+    <select class="info-select form-select" onchange="displaySelectedInfo()">
+      <option value="none">Selecciona una opción</option>
+      <option value="browser"><i class="fas fa-globe"></i> Navegador</option>
+      <option value="os"><i class="fas fa-laptop"></i> Sistema operativo</option>
+      <option value="resolution"><i class="fas fa-desktop"></i> Resolución de pantalla</option>
+      <option value="location"><i class="fas fa-map-marker-alt"></i> Ubicación geográfica</option>
+    </select>
+    <div id="infoContainer"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+  <script>
+    function getBrowserName() {
+      return navigator.userAgent;
+    }
+
+    function getOSName() {
+      return navigator.platform;
+    }
+
+    function getOS() {
+      var userAgent = navigator.userAgent;
+      var os;
+
+      if (userAgent.indexOf("Win") !== -1) {
+        os = "Windows";
+      } else if (userAgent.indexOf("Mac") !== -1) {
+        os = "Mac OS";
+      } else if (userAgent.indexOf("Linux") !== -1) {
+        os = "Linux";
+      } else if (userAgent.indexOf("Android") !== -1) {
+        os = "Android";
+      } else if (userAgent.indexOf("iOS") !== -1) {
+        os = "iOS";
+      } else {
+        os = "Unknown" + navigator.platform;;
+      }
+
+      return os;
+    }
+
+    function getScreenResolution() {
+      return window.screen.width + "x" + window.screen.height;
+    }
+
+    function showLocation(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      return "Latitud: " + latitude + ", Longitud: " + longitude;
+    }
+
+    function showError(error) {
+      return "Error al obtener la ubicación: " + error.message;
+    }
+
+    function displaySelectedInfo() {
+      var selectedOption = document.querySelector(".info-select").value;
+      var infoContainer = document.getElementById("infoContainer");
+      var infoText = "";
+
+      switch (selectedOption) {
+        case "browser":
+          infoText = "Navegador: " + getBrowserName();
+          break;
+        case "os":
+          infoText = "Sistema operativo: " + getOS();
+          break;
+        case "resolution":
+          infoText = "Resolución de pantalla: " + getScreenResolution();
+          break;
+        case "location":
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              function (position) {
+                infoText = showLocation(position);
+              },
+              function (error) {
+                infoText = showError(error);
+              }
+            );
+          } else {
+            infoText = "La geolocalización no es compatible con este navegador.";
+          }
+          break;
+        default:
+          infoText = "Selecciona una opción";
+      }
+
+      infoContainer.innerHTML = "<p>" + infoText + "</p>";
+    }
+  </script>
+</body>
+</html>
